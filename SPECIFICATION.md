@@ -73,33 +73,23 @@ weight=4500
 
 waterBody=Volga River
 
-codeText
-
 CHANGE\_STATUS
 
 id=1
 
 status=VERIFIED
 
-codeText
-
 FIND\_BY\_FISHERMAN
 
 fisherman=Ivan
-
-codeText
 
 FIND\_BY\_FISH
 
 fish=pike
 
-codeText
-
 FIND\_BY\_WATERBODY
 
 waterBody=volga
-
-codeText
 
 GET\_STATS
 
