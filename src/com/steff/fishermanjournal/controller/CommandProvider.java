@@ -4,19 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.steff.fishermanjournal.controller.impl.*;
+import com.steff.fishermanjournal.logic.RecordLogic;
 
 public class CommandProvider {
 	private final Map<CommandName, Command> repository = new HashMap<>();
 
-	public CommandProvider() {
-		repository.put(CommandName.CREATE_RECORD, new CreateRecordCommand());
-		repository.put(CommandName.CHANGE_STATUS, new ChangeStatusCommand());
-		repository.put(CommandName.FIND_BY_FISHERMAN, new FindByFishermanCommand());
-		repository.put(CommandName.FIND_BY_FISH, new FindByFishCommand());
-		repository.put(CommandName.FIND_BY_WATERBODY, new FindByWaterBodyCommand());
-		repository.put(CommandName.GET_STATS, new GetStatsCommand());
-		repository.put(CommandName.SHOW_ACTIVE, new ShowActiveCommand());
-		repository.put(CommandName.SHOW_ALL, new ShowAllCommand());
+	public CommandProvider(RecordLogic recordService) {
+		repository.put(CommandName.CREATE_RECORD, new CreateRecordCommand(recordService));
+		repository.put(CommandName.CHANGE_STATUS, new ChangeStatusCommand(recordService));
+		repository.put(CommandName.FIND_BY_FISHERMAN, new FindByFishermanCommand(recordService));
+		repository.put(CommandName.FIND_BY_FISH, new FindByFishCommand(recordService));
+		repository.put(CommandName.FIND_BY_WATERBODY, new FindByWaterBodyCommand(recordService));
+		repository.put(CommandName.GET_STATS, new GetStatsCommand(recordService));
+		repository.put(CommandName.SHOW_ACTIVE, new ShowActiveCommand(recordService));
+		repository.put(CommandName.SHOW_ALL, new ShowAllCommand(recordService));
 		repository.put(CommandName.WRONG_REQUEST, new NoSuchCommand());
 	}
 

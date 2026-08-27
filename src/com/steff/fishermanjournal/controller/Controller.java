@@ -1,23 +1,30 @@
 package com.steff.fishermanjournal.controller;
 
+import com.steff.fishermanjournal.logic.RecordLogic;
+
 public class Controller {
 	private final char paramDelimiter = '\n';
-	private final CommandProvider provider = new CommandProvider();
+	private final CommandProvider provider;
+
+	public Controller(RecordLogic recordLogic) {
+		this.provider = new CommandProvider(recordLogic);
+	}
 
 	public String doAction(String request) {
-		if (request == null || request.isBlank() || request.indexOf(paramDelimiter) == -1) {
+		if (request == null || request.isBlank()) {
 			return provider.getCommand("WRONG_REQUEST").execute(request);
 		}
 
 		String commandName;
-		commandName = request.substring(0, request.indexOf(paramDelimiter)).trim();
+		int delimiterIndex = request.indexOf(paramDelimiter);
 
-		Command executionCommand;
-		executionCommand = provider.getCommand(commandName);
+		if (delimiterIndex == -1) {
+			commandName = request.trim();
+		} else {
+			commandName = request.substring(0, delimiterIndex).trim();
+		}
 
-		String response;
-		response = executionCommand.execute(request);
-
-		return response;
+		Command executionCommand = provider.getCommand(commandName);
+		return executionCommand.execute(request);
 	}
 }
