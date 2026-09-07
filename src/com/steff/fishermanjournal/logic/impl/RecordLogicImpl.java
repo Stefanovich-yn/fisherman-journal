@@ -1,5 +1,6 @@
 package com.steff.fishermanjournal.logic.impl;
 
+import com.steff.fishermanjournal.dao.DaoProvider;
 import com.steff.fishermanjournal.dao.RecordDao;
 import com.steff.fishermanjournal.dao.DaoException;
 import com.steff.fishermanjournal.entity.CatchRecord;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class RecordLogicImpl implements RecordLogic {
 
-    private final RecordDao recordDao;
+    private final RecordDao recordDao = DaoProvider.getInstance().getRecordDao();
 
     private static final int MIN_WATER_BODY_LENGTH = 3;
     private static final int MAX_WATER_BODY_LENGTH = 50;
@@ -23,8 +24,7 @@ public class RecordLogicImpl implements RecordLogic {
     private static final int MIN_WEIGHT = 100;
     private static final int MAX_WEIGHT = 30000;
 
-    public RecordLogicImpl(RecordDao recordDao) {
-        this.recordDao = recordDao;
+    public RecordLogicImpl() {
     }
 
     @Override
@@ -140,7 +140,7 @@ public class RecordLogicImpl implements RecordLogic {
     }
 
     @Override
-    public List<CatchRecord> showActive() throws LogicException {
+    public List<CatchRecord> showAll() throws LogicException {
         try {
             return recordDao.findAll();
         } catch (DaoException e) {
@@ -149,7 +149,7 @@ public class RecordLogicImpl implements RecordLogic {
     }
 
     @Override
-    public List<CatchRecord> showAll() throws LogicException {
+    public List<CatchRecord> showActive() throws LogicException {
         try {
             List<CatchRecord> allRecords = recordDao.findAll();
             List<CatchRecord> activeRecords = new ArrayList<>();

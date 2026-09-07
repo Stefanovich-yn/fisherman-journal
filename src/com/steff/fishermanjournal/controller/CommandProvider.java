@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.steff.fishermanjournal.controller.impl.*;
+import com.steff.fishermanjournal.logic.LogicProvider;
 import com.steff.fishermanjournal.logic.RecordLogic;
 
 public class CommandProvider {
 	private final Map<CommandName, Command> repository = new HashMap<>();
 
-	public CommandProvider(RecordLogic recordLogic) {
+	public CommandProvider() {
+
+		RecordLogic recordLogic = LogicProvider.getInstance().getRecordService();
+
 		repository.put(CommandName.CREATE_RECORD, new CreateRecordCommand(recordLogic));
 		repository.put(CommandName.CHANGE_STATUS, new ChangeStatusCommand(recordLogic));
 		repository.put(CommandName.FIND_BY_FISHERMAN, new FindByFishermanCommand(recordLogic));

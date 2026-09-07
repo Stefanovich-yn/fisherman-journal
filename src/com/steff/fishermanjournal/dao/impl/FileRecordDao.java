@@ -18,16 +18,8 @@ public class FileRecordDao implements RecordDao {
     @Override
     public CatchRecord save(CatchRecord record) throws DaoException {
         List<CatchRecord> existingRecords = findAll();
-        long maxId = 0;
 
-        for (CatchRecord r : existingRecords) {
-            if (r.getId() > maxId) {
-                maxId = r.getId();
-            }
-        }
-
-        long newId = maxId + 1;
-        record.setId(newId);
+        record.setId(generateNextId(existingRecords));
 
         record.setStatus(RecordStatus.NEW);
         record.setCreatedAt(LocalDateTime.now());
@@ -35,18 +27,17 @@ public class FileRecordDao implements RecordDao {
         File file = new File(FILE_PATH);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-
             String recordLine = recordToString(record);
-
             writer.write(recordLine);
             writer.newLine();
-
         } catch (IOException e) {
-            throw new DaoException("Failed to save the record to the file:" + FILE_PATH, e);
+            throw new DaoException("Failed to save the record to the file: " + FILE_PATH, e);
         }
 
         return record;
     }
+
+
 
     @Override
     public void update(CatchRecord recordToUpdate) throws DaoException {
@@ -132,6 +123,13 @@ public class FileRecordDao implements RecordDao {
         }
 
         return null;
+    }
+
+    private long generateNextId(List<CatchRecord> existingRecords) {
+        return existingRecords.stream()
+                .mapToLong(CatchRecord::getId)
+                .max()
+                .orElse(0L) + 1;
     }
 
     private String recordToString(CatchRecord record) {
