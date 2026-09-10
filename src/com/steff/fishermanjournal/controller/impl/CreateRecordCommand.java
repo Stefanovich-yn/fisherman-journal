@@ -33,9 +33,11 @@ public class CreateRecordCommand implements Command {
             return "SUCCESS: Record created successfully. " + createdRecord.toString();
 
         } catch (LogicException e) {
-            return "ERROR: " + e.getMessage();
+            String reason = (e.getMessage() != null) ? e.getMessage() : "validation failed";
+            return "ERROR: Failed to create record. Reason: " + reason;
+
         } catch (IllegalArgumentException e) {
-            return "ERROR: Invalid parameter format. " + e.getMessage();
+            return "ERROR: Invalid parameter format. Reason: " + e.getMessage();
         }
     }
 

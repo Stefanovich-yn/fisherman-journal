@@ -14,11 +14,9 @@ public class CatchRecord {
     private RecordStatus status;
     private LocalDateTime createdAt;
 
-    //
     public CatchRecord() {
     }
 
-    //
     public CatchRecord(String fishermanName, String fishType, int quantity, int weight, String waterBody) {
         this.fishermanName = fishermanName;
         this.fishType = fishType;
@@ -28,7 +26,6 @@ public class CatchRecord {
 
     }
 
-    //
     public CatchRecord(Long id, String fishermanName, String fishType, int quantity, int weight, String waterBody, RecordStatus status, LocalDateTime CreateAt) {
         this.id = id;
         this.fishermanName = fishermanName;
@@ -41,7 +38,6 @@ public class CatchRecord {
 
     }
 
-    //
     public Long getId() {
         return id;
     }
@@ -106,7 +102,6 @@ public class CatchRecord {
         this.createdAt = createdAt;
     }
 
-    //
     public String toString() {
         return "CatchRecord [id=" + id + ", fishermanName=" + fishermanName + ", fishType=" + fishType + ", quantity=" + quantity + ", weight=" + weight + ", waterBody=" + waterBody + ", status=" + status + ", createdAt" + createdAt + "]";
     }

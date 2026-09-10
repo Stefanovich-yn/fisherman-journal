@@ -28,22 +28,25 @@ public class ChangeStatusCommand implements Command {
                 throw new IllegalArgumentException("Parameter 'status' is missing.");
             }
 
-            // Переводим строковый статус в Enum (с защитой от неправильного ввода)
             RecordStatus status;
             try {
                 status = RecordStatus.valueOf(statusStr.trim().toUpperCase());
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Unknown status: " + statusStr);
+                throw new IllegalArgumentException(String.format(
+                        "Unknown status '%s'. Allowed statuses are: NEW, VERIFIED, REGISTERED, ARCHIVED, CANCELLED.",
+                        statusStr
+                ));
             }
 
-            // Вызываем логику обновления
             recordService.changeStatus(id, status);
             return "SUCCESS: Status updated successfully for record ID " + id;
 
-        } catch (LogicException e) {
-            return "ERROR: " + e.getMessage();
+        }  catch (LogicException e) {
+            String reason = (e.getMessage() != null) ? e.getMessage() : "transition rejected";
+            return "ERROR: Failed to change status. Reason: " + reason;
+
         } catch (IllegalArgumentException e) {
-            return "ERROR: Invalid parameter format. " + e.getMessage();
+            return "ERROR: Invalid parameter format. Reason: " + e.getMessage();
         }
     }
 

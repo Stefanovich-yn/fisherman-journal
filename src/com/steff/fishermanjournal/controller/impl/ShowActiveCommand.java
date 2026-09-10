@@ -30,7 +30,8 @@ public class ShowActiveCommand implements Command {
             return sb.toString().trim();
 
         } catch (LogicException e) {
-            return "ERROR: " + e.getMessage();
+            String reason = (e.getMessage() != null) ? e.getMessage() : "internal service error";
+            return "ERROR: Unable to load active records. Reason: " + reason;
         }
     }
 }

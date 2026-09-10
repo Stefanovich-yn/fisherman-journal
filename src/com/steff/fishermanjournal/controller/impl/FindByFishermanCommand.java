@@ -27,7 +27,7 @@ public class FindByFishermanCommand implements Command {
             return formatResult(records);
 
         } catch (LogicException e) {
-            return "ERROR: " + e.getMessage();
+            return "ERROR: Missing required parameter 'fisherman'.";
         }
     }
 

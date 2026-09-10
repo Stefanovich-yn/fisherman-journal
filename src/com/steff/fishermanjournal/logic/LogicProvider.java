@@ -7,7 +7,6 @@ public final class LogicProvider {
 
     private LogicProvider() {}
 
-    // Создаем реализацию сервиса через конструктор по умолчанию
     private RecordLogic logic = new RecordLogicImpl();
 
     public RecordLogic getRecordService() {

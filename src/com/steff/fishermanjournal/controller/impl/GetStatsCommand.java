@@ -25,7 +25,7 @@ public class GetStatsCommand implements Command {
             return "SUCCESS:\n" + stats;
 
         } catch (LogicException e) {
-            return "ERROR: " + e.getMessage();
+            return "ERROR: Missing required parameter 'fisherman'.";
         }
     }
 

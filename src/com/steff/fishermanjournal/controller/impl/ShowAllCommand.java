@@ -30,7 +30,9 @@ public class ShowAllCommand implements Command {
             return sb.toString().trim();
 
         } catch (LogicException e) {
-            return "ERROR: " + e.getMessage();
+            // Ситуация 3: Ошибка чтения базы
+            String reason = (e.getMessage() != null) ? e.getMessage() : "internal service error";
+            return "ERROR: Unable to load journal records. Reason: " + reason;
         }
     }
 }
